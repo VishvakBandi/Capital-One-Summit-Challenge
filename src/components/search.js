@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import "../App.css";
 
-import { fetchPlaces } from "../services/FetchPlaces";
+import { fetchPlaces, fetchFlightWithDate } from "../services/FetchFlightData";
 
 function Search() {
     const [currency, setCurrency] = useState("USD");
@@ -36,7 +36,15 @@ function Search() {
                 console.log(originPlaceId);
                 console.log(destinationPlaceId);
 
-                flightsData = await getFlightsWithDate();
+                flightsData = (
+                    await fetchFlightWithDate(
+                        currency,
+                        originPlaceId,
+                        destinationPlaceId,
+                        departure,
+                        arrival
+                    )
+                ).data;
                 console.log(flightsData);
             }
         })();
