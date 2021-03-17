@@ -88,30 +88,6 @@ function Search() {
         // console.log(destinationPlaceId);
     }
 
-    async function getFlightsWithDate() {
-        const reqOptions = {
-            method: "GET",
-            headers: {
-                "x-rapidapi-key": `${process.env.REACT_APP_SKYSCANNER_KEY}`,
-                "x-rapidapi-host":
-                    "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-                useQueryString: true,
-            },
-        };
-        try {
-            let response = await fetch(
-                `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/${currency}/en-US/${originPlaceId}/${destinationPlaceId}/${departure}?inboundpartialdate=${arrival}`,
-                reqOptions
-            );
-            response = await response.json();
-
-            return response;
-        } catch (err) {
-            console.log(err);
-            return err;
-        }
-    }
-
     // maybe have everything next to each other
     return (
         <div className="App">
