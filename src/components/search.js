@@ -43,7 +43,6 @@ function Search() {
 
     async function callAPI() {
         originPlaceId = await getPlaces(origin);
-        console.log("CALLLLLL");
         destinationPlaceId = await getPlaces(destination);
 
         console.log(originPlaceId);
