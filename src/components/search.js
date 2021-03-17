@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import "../App.css";
+
+import { fetchPlaces } from "../services/FetchPlaces";
 
 function Search() {
     const [currency, setCurrency] = useState("USD");
@@ -10,8 +12,12 @@ function Search() {
     const [departure, setDeparture] = useState(getCurrentDate());
     const [arrival, setArrival] = useState("");
 
-    let originPlaceId = "";
-    let destinationPlaceId = "";
+    const [originPlaceId, setOriginPlaceId] = useState("");
+    const [destinationPlaceId, setDestinationPlaceId] = useState("");
+
+    let flightsData;
+    // let originPlaceId = "";
+    //let destinationPlaceId = "";
 
     function getCurrentDate(separator = "-") {
         let newDate = new Date();
@@ -24,11 +30,29 @@ function Search() {
         }${separator}${date}`;
     }
 
+    useEffect(() => {
+        (async () => {
+            if (originPlaceId !== "" && destinationPlaceId !== "") {
+                console.log(originPlaceId);
+                console.log(destinationPlaceId);
+
+                flightsData = await getFlightsWithDate();
+                console.log(flightsData);
+            }
+        })();
+    }, [originPlaceId, destinationPlaceId]);
+
     function handleSubmit(event) {
         event.preventDefault();
         if (validateInput()) {
             callAPI();
         }
+
+        return (
+            <Button variant="contained" color="primary">
+                test
+            </Button>
+        );
     }
 
     function validateInput() {
@@ -42,13 +66,18 @@ function Search() {
     }
 
     async function callAPI() {
-        originPlaceId = await getPlaces(origin);
-        destinationPlaceId = await getPlaces(destination);
+        // originPlaceId = await getPlaces(origin);
+        // destinationPlaceId = await getPlaces(destination);
 
-        console.log(originPlaceId);
-        console.log(destinationPlaceId);
+        //const temp = await getPlaces(origin);
 
-        console.log(await getFlightsWithDate());
+        //console.log(await fetchPlaces(origin));
+
+        setOriginPlaceId((await fetchPlaces(origin)).data);
+        setDestinationPlaceId((await fetchPlaces(destination)).data);
+
+        //console.log(originId);
+        // console.log(destinationPlaceId);
     }
 
     async function getPlaces(location) {
@@ -71,7 +100,7 @@ function Search() {
 
             response = await response.json();
 
-            return response.Places[0].PlaceId;
+            return { status: 200, data: response.Places[0].PlaceId };
         } catch (err) {
             console.log(err);
             return err;
