@@ -24,6 +24,7 @@ function Search() {
     const [originPlaceId, setOriginPlaceId] = useState("");
     const [destinationPlaceId, setDestinationPlaceId] = useState("");
 
+    const [showMonthFlights, setShowMonthFlights] = useState(false);
     const [showFlights, setShowFlights] = useState(false);
     const [showErr, setShowErr] = useState(false);
     const [flightData, setFlightData] = useState();
@@ -80,7 +81,7 @@ function Search() {
             if (monthFlightData === undefined) {
                 return;
             } else if (monthFlightData.status === 200) {
-                setShowFlights(true);
+                setShowMonthFlights(true);
             } else {
                 setShowErr(true);
             }
@@ -136,10 +137,14 @@ function Search() {
                     setDeparture={setDeparture}
                     setArrival={setArrival}
                 />
-                {showFlights ? (
+                {showFlights && showMonthFlights ? (
                     <>
                         <Results flightInfo={flightData}></Results>
                         <p>Flights for Month</p>
+                        <Results
+                            flightInfo={monthFlightData}
+                            showDate={true}
+                        ></Results>
                     </>
                 ) : (
                     <></>

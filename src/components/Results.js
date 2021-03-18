@@ -5,8 +5,9 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
-function Results({ flightInfo }) {
+function Results({ flightInfo, showDate }) {
     const classes = useStyles();
 
     console.log(flightInfo);
@@ -35,39 +36,70 @@ function Results({ flightInfo }) {
         }
     }
 
+    function displayDate(date) {
+        if (showDate === true) {
+            return (
+                <Typography className={classes.pos} color="textSecondary">
+                    Departure Date: {date}
+                </Typography>
+            );
+        }
+    }
+
     return (
         <div>
-            {quotes.map((quote, index) => {
-                return (
-                    <Card key={index} className={classes.root}>
-                        <CardContent>
-                            <Typography
-                                className={classes.title}
-                                color="textSecondary"
-                                gutterBottom
-                            >
-                                Flight Information
-                            </Typography>
-                            <Typography variant="h5" component="h2">
-                                ${quote.MinPrice}
-                            </Typography>
-                            <Typography
-                                className={classes.pos}
-                                color="textSecondary"
-                            >
-                                {findCarrier(quote.OutboundLeg.CarrierIds[0])}
-                            </Typography>
-                            <Typography variant="body2" component="p">
-                                {findAirport(quote.OutboundLeg.OriginId)} to{" "}
-                                {findAirport(quote.OutboundLeg.DestinationId)}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Learn More</Button>
-                        </CardActions>
-                    </Card>
-                );
-            })}
+            <Grid container item xs={12} spacing={3}>
+                {quotes.map((quote, index) => {
+                    return (
+                        <Grid item xs={4}>
+                            <Card key={index} className={classes.root}>
+                                <CardContent>
+                                    <Typography
+                                        className={classes.title}
+                                        color="textSecondary"
+                                        gutterBottom
+                                    >
+                                        Flight Information
+                                    </Typography>
+                                    <Typography variant="h5" component="h2">
+                                        ${quote.MinPrice}
+                                    </Typography>
+                                    <Typography
+                                        className={classes.pos}
+                                        color="textSecondary"
+                                    >
+                                        {findCarrier(
+                                            quote.OutboundLeg.CarrierIds[0]
+                                        )}
+                                    </Typography>
+                                    {showDate ? (
+                                        displayDate(
+                                            quote.OutboundLeg.DepartureDate.slice(
+                                                5,
+                                                10
+                                            )
+                                        )
+                                    ) : (
+                                        <></>
+                                    )}
+                                    <Typography variant="body2" component="p">
+                                        {findAirport(
+                                            quote.OutboundLeg.OriginId
+                                        )}{" "}
+                                        to{" "}
+                                        {findAirport(
+                                            quote.OutboundLeg.DestinationId
+                                        )}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small">Learn More</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    );
+                })}
+            </Grid>
         </div>
     );
 }
