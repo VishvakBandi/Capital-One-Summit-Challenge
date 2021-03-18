@@ -26,9 +26,6 @@ function Search() {
 
     const classes = useStyles();
 
-    // let originPlaceId = "";
-    //let destinationPlaceId = "";
-
     function getCurrentDate(separator = "-") {
         let newDate = new Date();
         let date = newDate.getDate();
@@ -59,18 +56,16 @@ function Search() {
                 console.log(flightData);
 
                 setGetFlightData(false);
-
-                // console.log(flightData);
             }
         })();
-    }, [getFlightData, flightData]);
+    }, [getFlightData]);
 
     useEffect(() => {
         (async () => {
-            if (flightData !== undefined && flightData.status === 200) {
-                setShowFlights(true);
-            } else if (flightData === undefined) {
+            if (flightData === undefined) {
                 return;
+            } else if (flightData.status === 200) {
+                setShowFlights(true);
             } else {
                 setShowErr(true);
             }
@@ -79,6 +74,10 @@ function Search() {
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        setShowFlights(false);
+        setShowErr(false);
+
         if (validateInput()) {
             callAPI();
         }
@@ -95,22 +94,16 @@ function Search() {
     }
 
     async function callAPI() {
-        // originPlaceId = await getPlaces(origin);
-        // destinationPlaceId = await getPlaces(destination);
-
-        //const temp = await getPlaces(origin);
-
-        //console.log(await fetchPlaces(origin));
-
         setOriginPlaceId((await fetchPlaces(origin)).data);
         setDestinationPlaceId((await fetchPlaces(destination)).data);
 
-        setGetFlightData(true);
+        //console.log(destinationPlaceId);
 
-        //console.log(originId);
-        // console.log(destinationPlaceId);
+        setGetFlightData(true);
     }
-    console.log(showErr);
+
+    console.log("rerender");
+
     // maybe have everything next to each other
     return (
         <div className="App">
@@ -131,7 +124,6 @@ function Search() {
                         id="outlined-basic"
                         label="Origin Destination"
                         variant="outlined"
-                        defaultValue={origin}
                         onChange={(e) => setOrigin(e.target.value)}
                     />
                     <TextField
@@ -143,12 +135,12 @@ function Search() {
                     />
                     <div>
                         <TextField
+                            required
                             InputProps={{
                                 inputProps: {
                                     min: getCurrentDate().toString(),
                                 },
                             }}
-                            required
                             id="date"
                             label="Departure Date"
                             type="date"

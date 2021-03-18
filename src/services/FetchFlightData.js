@@ -20,11 +20,15 @@ export const fetchPlaces = (props) => {
                 reqOptions
             );
 
-            response = await response.json();
+            if (response.ok) {
+                response = await response.json();
 
-            // console.log(response);
+                // console.log(response);
 
-            return { status: 200, data: response.Places[0].PlaceId };
+                return { status: 200, data: response.Places[0].PlaceId };
+            } else {
+                throw new Error("Place not found");
+            }
         } catch (err) {
             console.log(err);
             return { status: 500, error: err };
@@ -56,13 +60,19 @@ export const fetchFlightWithDate = (
                 `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/${currency}/en-US/${originPlaceId}/${destinationPlaceId}/${departure}?inboundpartialdate=${arrival}`,
                 reqOptions
             );
+
             console.log(response.ok);
 
             if (response.ok) {
                 response = await response.json();
+
+                if (response.Quotes.length === 0) {
+                    throw new Error("No flights were found");
+                }
+
                 return { status: 200, data: response };
             } else {
-                throw new Error("API error");
+                throw new Error("No flights were found");
             }
         } catch (err) {
             console.log("ERROR:" + err);
