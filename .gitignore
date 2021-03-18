@@ -8,7 +8,7 @@
 /src/logo.svg
 
 #API keys
-.env
+#.env
 
 # testing
 /coverage
