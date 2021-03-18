@@ -104,7 +104,7 @@ function Search() {
                         style={{ width: "13%" }}
                         required
                         id="outlined-basic"
-                        label="Currency"
+                        label="currency"
                         variant="outlined"
                         defaultValue="USD"
                         onChange={(e) => setCurrency(e.target.value)}
