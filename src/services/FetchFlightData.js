@@ -56,11 +56,16 @@ export const fetchFlightWithDate = (
                 `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/${currency}/en-US/${originPlaceId}/${destinationPlaceId}/${departure}?inboundpartialdate=${arrival}`,
                 reqOptions
             );
-            response = await response.json();
+            console.log(response.ok);
 
-            return { status: 200, data: response };
+            if (response.ok) {
+                response = await response.json();
+                return { status: 200, data: response };
+            } else {
+                throw new Error("API error");
+            }
         } catch (err) {
-            console.log(err);
+            console.log("ERROR:" + err);
             return { status: 500, error: err };
         }
     }

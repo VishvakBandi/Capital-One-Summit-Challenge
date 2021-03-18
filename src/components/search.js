@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 import "../App.css";
+
+import Results from "./Results";
 
 import { fetchPlaces, fetchFlightWithDate } from "../services/FetchFlightData";
 
@@ -15,7 +18,14 @@ function Search() {
     const [originPlaceId, setOriginPlaceId] = useState("");
     const [destinationPlaceId, setDestinationPlaceId] = useState("");
 
-    let flightsData;
+    const [showFlights, setShowFlights] = useState(false);
+    const [showErr, setShowErr] = useState(false);
+    const [flightData, setFlightData] = useState();
+
+    const [getFlightData, setGetFlightData] = useState("false");
+
+    const classes = useStyles();
+
     // let originPlaceId = "";
     //let destinationPlaceId = "";
 
@@ -32,11 +42,11 @@ function Search() {
 
     useEffect(() => {
         (async () => {
-            if (originPlaceId !== "" && destinationPlaceId !== "") {
+            if (getFlightData === true) {
                 console.log(originPlaceId);
                 console.log(destinationPlaceId);
 
-                flightsData = (
+                setFlightData(
                     await fetchFlightWithDate(
                         currency,
                         originPlaceId,
@@ -44,23 +54,34 @@ function Search() {
                         departure,
                         arrival
                     )
-                ).data;
-                console.log(flightsData);
+                );
+
+                console.log(flightData);
+
+                setGetFlightData(false);
+
+                // console.log(flightData);
             }
         })();
-    }, [originPlaceId, destinationPlaceId]);
+    }, [getFlightData, flightData]);
+
+    useEffect(() => {
+        (async () => {
+            if (flightData !== undefined && flightData.status === 200) {
+                setShowFlights(true);
+            } else if (flightData === undefined) {
+                return;
+            } else {
+                setShowErr(true);
+            }
+        })();
+    }, [flightData]);
 
     function handleSubmit(event) {
         event.preventDefault();
         if (validateInput()) {
             callAPI();
         }
-
-        return (
-            <Button variant="contained" color="primary">
-                test
-            </Button>
-        );
     }
 
     function validateInput() {
@@ -84,10 +105,12 @@ function Search() {
         setOriginPlaceId((await fetchPlaces(origin)).data);
         setDestinationPlaceId((await fetchPlaces(destination)).data);
 
+        setGetFlightData(true);
+
         //console.log(originId);
         // console.log(destinationPlaceId);
     }
-
+    console.log(showErr);
     // maybe have everything next to each other
     return (
         <div className="App">
@@ -162,9 +185,30 @@ function Search() {
                         </Button>
                     </div>
                 </form>
+                {showFlights ? (
+                    <Results flightInfo={flightData}></Results>
+                ) : (
+                    <></>
+                )}
+                {showErr ? (
+                    <div>
+                        <p className={classes.errorText}>
+                            There are no flights availible for your selections
+                        </p>
+                    </div>
+                ) : (
+                    <></>
+                )}
             </header>
         </div>
     );
 }
+
+const useStyles = makeStyles({
+    errorText: {
+        fontSize: 14,
+        color: "red",
+    },
+});
 
 export default Search;
