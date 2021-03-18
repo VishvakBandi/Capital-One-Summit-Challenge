@@ -8,6 +8,7 @@ import Results from "./Results";
 
 import { fetchPlaces, fetchFlightWithDate } from "../services/FetchFlightData";
 import { getCurrentDate } from "../services/utils";
+import SearchForm from "./SearchForm";
 
 function Search() {
     const classes = useStyles();
@@ -98,75 +99,15 @@ function Search() {
     return (
         <div className="App">
             <header className="App-header">
-                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                    <TextField
-                        error={false}
-                        style={{ width: "13%" }}
-                        required
-                        id="outlined-basic"
-                        label="currency"
-                        variant="outlined"
-                        defaultValue="USD"
-                        onChange={(e) => setCurrency(e.target.value)}
-                    />
-                    <TextField
-                        required
-                        id="outlined-basic"
-                        label="Origin Destination"
-                        variant="outlined"
-                        onChange={(e) => setOrigin(e.target.value)}
-                    />
-                    <TextField
-                        required
-                        id="outlined-basic"
-                        label="Final Destination"
-                        variant="outlined"
-                        onChange={(e) => setDestination(e.target.value)}
-                    />
-                    <div>
-                        <TextField
-                            required
-                            InputProps={{
-                                inputProps: {
-                                    min: getCurrentDate().toString(),
-                                },
-                            }}
-                            id="date"
-                            label="Departure Date"
-                            type="date"
-                            defaultValue={getCurrentDate().toString()}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={(e) => setDeparture(e.target.value)}
-                        />
-                        <TextField
-                            InputProps={{
-                                inputProps: {
-                                    min: departure,
-                                },
-                            }}
-                            required
-                            id="date"
-                            label="Arrival Date"
-                            type="date"
-                            defaultValue=""
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={(e) => setArrival(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                        >
-                            Search
-                        </Button>
-                    </div>
-                </form>
+                <SearchForm
+                    handleSubmit={handleSubmit}
+                    departure={departure}
+                    setCurrency={setCurrency}
+                    setOrigin={setOrigin}
+                    setDestination={setDestination}
+                    setDeparture={setDeparture}
+                    setArrival={setArrival}
+                />
                 {showFlights ? (
                     <Results flightInfo={flightData}></Results>
                 ) : (
