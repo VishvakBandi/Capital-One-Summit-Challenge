@@ -61,10 +61,10 @@ export const fetchFlightWithDate = (
                 reqOptions
             );
 
-            console.log(response.ok);
-
             if (response.ok) {
                 response = await response.json();
+
+                console.log(response);
 
                 if (response.Quotes.length === 0) {
                     throw new Error("No flights were found");

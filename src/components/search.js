@@ -17,6 +17,10 @@ function Search() {
     const [departure, setDeparture] = useState(getCurrentDate());
     const [arrival, setArrival] = useState("");
 
+    const [monthDeparture, setMonthDeparture] = useState("");
+    const [monthArrival, setMonthArrival] = useState("");
+    const [monthFlightData, setMonthFlightData] = useState();
+
     const [originPlaceId, setOriginPlaceId] = useState("");
     const [destinationPlaceId, setDestinationPlaceId] = useState("");
 
@@ -42,6 +46,16 @@ function Search() {
                     )
                 );
 
+                setMonthFlightData(
+                    await fetchFlightWithDate(
+                        currency,
+                        originPlaceId,
+                        destinationPlaceId,
+                        monthDeparture,
+                        monthArrival
+                    )
+                );
+
                 console.log(flightData);
 
                 setGetFlightData(false);
@@ -61,6 +75,18 @@ function Search() {
         })();
     }, [flightData]);
 
+    useEffect(() => {
+        (async () => {
+            if (monthFlightData === undefined) {
+                return;
+            } else if (monthFlightData.status === 200) {
+                setShowFlights(true);
+            } else {
+                setShowErr(true);
+            }
+        })();
+    }, [monthFlightData]);
+
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -79,6 +105,10 @@ function Search() {
         console.log(destination);
         console.log(departure);
         console.log(arrival);
+
+        setMonthDeparture(departure.slice(0, 7));
+        setMonthArrival(arrival.slice(0, 7));
+
         return true;
     }
 
@@ -107,7 +137,10 @@ function Search() {
                     setArrival={setArrival}
                 />
                 {showFlights ? (
-                    <Results flightInfo={flightData}></Results>
+                    <>
+                        <Results flightInfo={flightData}></Results>
+                        <p>Flights for Month</p>
+                    </>
                 ) : (
                     <></>
                 )}

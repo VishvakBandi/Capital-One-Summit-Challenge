@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 function Results({ flightInfo }) {
     const classes = useStyles();
 
+    console.log(flightInfo);
+
     const data = flightInfo.data;
 
     console.log(data.data);
