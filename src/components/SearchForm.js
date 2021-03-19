@@ -1,8 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import classes from "../css/Search.css";
-import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 import { getCurrentDate } from "../services/utils";
@@ -21,7 +19,6 @@ const SearchForm = ({
             <Grid container item xs={12} spacing={2}>
                 <Grid item xs={2}>
                     <TextField
-                        error={false}
                         required
                         id="outlined-basic-currency"
                         label="currency"
@@ -99,4 +96,4 @@ const SearchForm = ({
     );
 };
 
-export default withStyles(classes)(SearchForm);
+export default SearchForm;

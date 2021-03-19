@@ -51,7 +51,7 @@ function Results({ flightInfo, showDate, lowHigh }) {
     function displayDate(date) {
         if (showDate === true) {
             return (
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography color="textSecondary">
                     Departure Date: {date}
                 </Typography>
             );
@@ -64,10 +64,9 @@ function Results({ flightInfo, showDate, lowHigh }) {
                 {quotes.map((quote, index) => {
                     return (
                         <Grid key={index} item xs={4}>
-                            <Card className={classes.root} raaised={true}>
+                            <Card className={classes.root}>
                                 <CardContent>
                                     <Typography
-                                        className={classes.title}
                                         color="textSecondary"
                                         gutterBottom
                                     >
@@ -87,10 +86,7 @@ function Results({ flightInfo, showDate, lowHigh }) {
                                     <Typography variant="h5" component="h2">
                                         ${quote.MinPrice}
                                     </Typography>
-                                    <Typography
-                                        className={classes.pos}
-                                        color="textSecondary"
-                                    >
+                                    <Typography color="textSecondary">
                                         Carrier:{" "}
                                         {findCarrier(
                                             quote.OutboundLeg.CarrierIds[0]
@@ -134,17 +130,6 @@ const useStyles = makeStyles({
         "&:hover": {
             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
         },
-    },
-    bullet: {
-        display: "inline-block",
-        margin: "0 2px",
-        transform: "scale(0.8)",
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
     },
 });
 

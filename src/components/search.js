@@ -171,7 +171,8 @@ function Search() {
                 {showErr ? (
                     <div>
                         <p className="error">
-                            There are no flights available for your selections
+                            There are no flights available for your selections.
+                            Please try changing your search criteria.
                         </p>
                     </div>
                 ) : (

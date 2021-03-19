@@ -1,5 +1,4 @@
 export const fetchPlaces = (props) => {
-    // console.log(props);
     return getPlaces(props);
 
     async function getPlaces(location) {
@@ -58,8 +57,6 @@ export const fetchFlightWithDate = (
                 `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/${currency}/en-US/${originPlaceId}/${destinationPlaceId}/${departure}?inboundpartialdate=${arrival}`,
                 reqOptions
             );
-
-            console.log(departure + " " + arrival);
 
             if (response.ok) {
                 response = await response.json();
