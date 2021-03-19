@@ -23,8 +23,6 @@ export const fetchPlaces = (props) => {
             if (response.ok) {
                 response = await response.json();
 
-                // console.log(response);
-
                 return { status: 200, data: response.Places[0].PlaceId };
             } else {
                 throw new Error("Place not found");
@@ -61,10 +59,10 @@ export const fetchFlightWithDate = (
                 reqOptions
             );
 
+            console.log(departure + " " + arrival);
+
             if (response.ok) {
                 response = await response.json();
-
-                console.log(response);
 
                 if (response.Quotes.length === 0) {
                     throw new Error("No flights were found");

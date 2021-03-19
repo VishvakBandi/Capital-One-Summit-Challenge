@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import "../css/Search.css";
 
 import Results from "./Results";
@@ -10,8 +9,6 @@ import { getCurrentDate } from "../services/utils";
 import SearchForm from "./SearchForm";
 
 function Search() {
-    const classes = useStyles();
-
     const [currency, setCurrency] = useState("USD");
     const [origin, setOrigin] = useState("");
     const [destination, setDestination] = useState("");
@@ -20,26 +17,24 @@ function Search() {
 
     const [monthDeparture, setMonthDeparture] = useState("");
     const [monthArrival, setMonthArrival] = useState("");
-    const [monthFlightData, setMonthFlightData] = useState();
+
+    const [getFlightData, setGetFlightData] = useState(false);
 
     const [originPlaceId, setOriginPlaceId] = useState("");
     const [destinationPlaceId, setDestinationPlaceId] = useState("");
 
+    const [flightData, setFlightData] = useState();
+    const [monthFlightData, setMonthFlightData] = useState();
+
     const [showMonthFlights, setShowMonthFlights] = useState(false);
     const [showFlights, setShowFlights] = useState(false);
     const [showErr, setShowErr] = useState(false);
-    const [flightData, setFlightData] = useState();
-
-    const [getFlightData, setGetFlightData] = useState(false);
 
     const [lowHigh, setLowHigh] = useState("lowHigh");
 
     useEffect(() => {
         (async () => {
             if (getFlightData === true) {
-                console.log(originPlaceId);
-                console.log(destinationPlaceId);
-
                 setFlightData(
                     await fetchFlightWithDate(
                         currency,
@@ -59,8 +54,6 @@ function Search() {
                         monthArrival
                     )
                 );
-
-                console.log(flightData);
 
                 setGetFlightData(false);
             }
@@ -99,22 +92,12 @@ function Search() {
         setShowErr(false);
         setGetFlightData(false);
 
-        console.log(destination);
-        console.log("HELLO");
-
         if (validateInput()) {
             callAPI();
         }
     }
 
     function validateInput() {
-        console.log(`${process.env.REACT_APP_SKYSCANNER_KEY}`);
-        console.log(currency);
-        console.log(origin);
-        console.log(destination);
-        console.log(departure);
-        console.log(arrival);
-
         setMonthDeparture(departure.slice(0, 7));
         setMonthArrival(arrival.slice(0, 7));
 
@@ -131,8 +114,6 @@ function Search() {
     function handleDropdownChange(event) {
         setLowHigh(event.target.value);
     }
-
-    console.log("rerender");
 
     // maybe have everything next to each other
     return (
@@ -189,8 +170,8 @@ function Search() {
 
                 {showErr ? (
                     <div>
-                        <p className={classes.errorText}>
-                            There are no flights availible for your selections
+                        <p className="error">
+                            There are no flights available for your selections
                         </p>
                     </div>
                 ) : (
@@ -200,12 +181,5 @@ function Search() {
         </div>
     );
 }
-
-const useStyles = makeStyles({
-    errorText: {
-        fontSize: 14,
-        color: "red",
-    },
-});
 
 export default Search;

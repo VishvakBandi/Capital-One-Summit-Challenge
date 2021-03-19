@@ -1,25 +1,22 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 import "../css/Search.css";
 
 function Results({ flightInfo, showDate, lowHigh }) {
     const classes = useStyles();
 
-    console.log(flightInfo);
-
     const data = flightInfo.data;
-
-    console.log(data.data);
 
     var quotes = data.Quotes;
 
     if (lowHigh !== "lowHigh") {
-        console.log(lowHigh);
         quotes.sort((a, b) => {
             return b.QuoteId - a.QuoteId;
         });
@@ -28,8 +25,6 @@ function Results({ flightInfo, showDate, lowHigh }) {
             return a.QuoteId - b.QuoteId;
         });
     }
-
-    console.log(quotes);
 
     function findCarrier(carrierId) {
         for (var i = 0; i < data.Carriers.length; i++) {

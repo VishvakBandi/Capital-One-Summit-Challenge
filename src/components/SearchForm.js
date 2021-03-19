@@ -58,7 +58,7 @@ const SearchForm = ({
                         }}
                         id="date"
                         label="Departure Date"
-                        type="departureDate"
+                        type="date"
                         defaultValue={getCurrentDate().toString()}
                         InputLabelProps={{
                             shrink: true,
