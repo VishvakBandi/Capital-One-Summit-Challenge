@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import "../App.css";
+import "../css/Search.css";
 
 import Results from "./Results";
 
@@ -126,8 +126,8 @@ function Search() {
 
     // maybe have everything next to each other
     return (
-        <div className="App">
-            <header className="App-header">
+        <div className="Search">
+            <header className="Search-header">
                 <SearchForm
                     handleSubmit={handleSubmit}
                     departure={departure}
