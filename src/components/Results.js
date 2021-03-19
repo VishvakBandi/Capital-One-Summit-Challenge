@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 import "../css/Search.css";
 
-function Results({ flightInfo, showDate }) {
+function Results({ flightInfo, showDate, lowHigh }) {
     const classes = useStyles();
 
     console.log(flightInfo);
@@ -16,7 +16,18 @@ function Results({ flightInfo, showDate }) {
 
     console.log(data.data);
 
-    const quotes = data.Quotes;
+    var quotes = data.Quotes;
+
+    if (lowHigh !== "lowHigh") {
+        console.log(lowHigh);
+        quotes.sort((a, b) => {
+            return b.QuoteId - a.QuoteId;
+        });
+    } else if (quotes[0].QuoteId !== 0) {
+        quotes.sort((a, b) => {
+            return a.QuoteId - b.QuoteId;
+        });
+    }
 
     console.log(quotes);
 

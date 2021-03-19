@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../css/Search.css";
 
 import Results from "./Results";
+import Tools from "./Tools";
 
 import { fetchPlaces, fetchFlightWithDate } from "../services/FetchFlightData";
 import { getCurrentDate } from "../services/utils";
@@ -29,7 +30,9 @@ function Search() {
     const [showErr, setShowErr] = useState(false);
     const [flightData, setFlightData] = useState();
 
-    const [getFlightData, setGetFlightData] = useState("false");
+    const [getFlightData, setGetFlightData] = useState(false);
+
+    const [lowHigh, setLowHigh] = useState("lowHigh");
 
     useEffect(() => {
         (async () => {
@@ -92,7 +95,10 @@ function Search() {
         event.preventDefault();
 
         setShowFlights(false);
+        setShowMonthFlights(false);
         setShowErr(false);
+
+        console.log(destination);
 
         if (validateInput()) {
             callAPI();
@@ -122,6 +128,10 @@ function Search() {
         setGetFlightData(true);
     }
 
+    function handleDropdownChange(event) {
+        setLowHigh(event.target.value);
+    }
+
     console.log("rerender");
 
     // maybe have everything next to each other
@@ -139,10 +149,23 @@ function Search() {
                 />
                 {showFlights ? (
                     <>
-                        <p className="mid-text">
-                            Flights for the selected dates
-                        </p>
-                        <Results flightInfo={flightData}></Results>
+                        <Tools
+                            origin={origin}
+                            setOrigin={setOrigin}
+                            setDestination={setDestination}
+                            handleSubmit={handleSubmit}
+                            lowHigh={lowHigh}
+                            handleDropdownChange={handleDropdownChange}
+                        />
+                        <div>
+                            <p className="mid-text">
+                                Flights for the selected dates
+                            </p>
+                            <Results
+                                flightInfo={flightData}
+                                lowHigh={lowHigh}
+                            ></Results>
+                        </div>
                     </>
                 ) : (
                     <></>
@@ -156,6 +179,7 @@ function Search() {
                         <Results
                             flightInfo={monthFlightData}
                             showDate={true}
+                            lowHigh={lowHigh}
                         ></Results>
                     </>
                 ) : (
