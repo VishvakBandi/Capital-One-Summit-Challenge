@@ -10,9 +10,12 @@ function App() {
     return (
         <StylesProvider injectFirst>
             <div className="App">
-                <Header title="Flight Search"></Header>
+                <Header title="FlightFinder"></Header>
                 <Search></Search>
-                <Footer title="Flights"></Footer>
+                <Footer
+                    title="Finding flights made easy. FlightFinder will show you flights and their associated costs."
+                    footnote="Made by Vishvak Bandi. Powered by the SkyScanner API & React.js. Hosted on Netlify."
+                ></Footer>
             </div>
         </StylesProvider>
     );
