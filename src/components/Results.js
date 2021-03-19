@@ -1,11 +1,11 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+
+import "../css/Search.css";
 
 function Results({ flightInfo, showDate }) {
     const classes = useStyles();
@@ -47,7 +47,7 @@ function Results({ flightInfo, showDate }) {
     }
 
     return (
-        <div>
+        <div className="resultsBox">
             <Grid container item xs={12} spacing={3}>
                 {quotes.map((quote, index) => {
                     return (
@@ -68,6 +68,7 @@ function Results({ flightInfo, showDate }) {
                                         className={classes.pos}
                                         color="textSecondary"
                                     >
+                                        Carrier:{" "}
                                         {findCarrier(
                                             quote.OutboundLeg.CarrierIds[0]
                                         )}
@@ -92,9 +93,6 @@ function Results({ flightInfo, showDate }) {
                                         )}
                                     </Typography>
                                 </CardContent>
-                                <CardActions>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
                             </Card>
                         </Grid>
                     );

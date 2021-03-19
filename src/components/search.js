@@ -137,10 +137,22 @@ function Search() {
                     setDeparture={setDeparture}
                     setArrival={setArrival}
                 />
-                {showFlights && showMonthFlights ? (
+                {showFlights ? (
                     <>
+                        <p className="mid-text">
+                            Flights for the selected dates
+                        </p>
                         <Results flightInfo={flightData}></Results>
-                        <p className="mid-text">Flights for Month</p>
+                    </>
+                ) : (
+                    <></>
+                )}
+
+                {showMonthFlights ? (
+                    <>
+                        <p className="mid-text">
+                            Flight options for selected month
+                        </p>
                         <Results
                             flightInfo={monthFlightData}
                             showDate={true}
@@ -149,6 +161,7 @@ function Search() {
                 ) : (
                     <></>
                 )}
+
                 {showErr ? (
                     <div>
                         <p className={classes.errorText}>

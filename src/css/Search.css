@@ -10,8 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: calc(10px + 2vmin);
     color: white;
+    font-size: calc(10px + 2vmin);
 }
 
 .mid-text {
@@ -22,4 +22,9 @@
     background-color: white;
     margin: 10 !important;
     padding: 10 !important;
+}
+
+.resultsBox {
+    margin-left: 50px;
+    margin-right: 50px;
 }
