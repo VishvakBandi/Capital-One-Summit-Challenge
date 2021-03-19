@@ -140,7 +140,7 @@ function Search() {
                 {showFlights && showMonthFlights ? (
                     <>
                         <Results flightInfo={flightData}></Results>
-                        <p>Flights for Month</p>
+                        <p className="mid-text">Flights for Month</p>
                         <Results
                             flightInfo={monthFlightData}
                             showDate={true}
