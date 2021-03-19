@@ -9,22 +9,22 @@ import "../css/Tools.css";
 const Tools = (props) => {
     return (
         <div className="tools-component">
-            <>
-                <Button
-                    className="tool"
-                    onClick={() => {
-                        const temp = props.originPlaceId;
-                        props.setOriginPlaceId(props.destinationPlaceId);
-                        props.setDestinationPlaceId(temp);
-                        props.setGetFlightData(true);
-                    }}
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                >
-                    Flip Search
-                </Button>
-            </>
+            <Button
+                onClick={() => {
+                    const temp = props.originPlaceId;
+                    props.setOriginPlaceId(props.destinationPlaceId);
+                    props.setDestinationPlaceId(temp);
+                    props.setGetFlightData(true);
+                }}
+                variant="contained"
+                color="primary"
+                size="large"
+                style={{
+                    marginRight: "20px",
+                }}
+            >
+                Flip Search
+            </Button>
             <FormControl>
                 <InputLabel>Sort By</InputLabel>
                 <Select
