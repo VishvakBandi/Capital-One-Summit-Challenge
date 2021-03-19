@@ -23,7 +23,7 @@ const SearchForm = ({
                     <TextField
                         error={false}
                         required
-                        id="outlined-basic"
+                        id="outlined-basic-currency"
                         label="currency"
                         variant="outlined"
                         defaultValue="USD"
@@ -33,7 +33,7 @@ const SearchForm = ({
                 <Grid item xs={2}>
                     <TextField
                         required
-                        id="outlined-basic"
+                        id="outlined-basic-origin"
                         label="Origin Destination"
                         variant="outlined"
                         onChange={(e) => setOrigin(e.target.value)}
@@ -42,7 +42,7 @@ const SearchForm = ({
                 <Grid item xs={2}>
                     <TextField
                         required
-                        id="outlined-basic"
+                        id="outlined-basic-destination"
                         label="Final Destination"
                         variant="outlined"
                         onChange={(e) => setDestination(e.target.value)}
@@ -58,7 +58,7 @@ const SearchForm = ({
                         }}
                         id="date"
                         label="Departure Date"
-                        type="date"
+                        type="departureDate"
                         defaultValue={getCurrentDate().toString()}
                         InputLabelProps={{
                             shrink: true,
@@ -74,7 +74,7 @@ const SearchForm = ({
                             },
                         }}
                         required
-                        id="date"
+                        id="arrivalDate"
                         label="Arrival Date"
                         type="date"
                         defaultValue=""

@@ -23,7 +23,7 @@ function Results({ flightInfo, showDate, lowHigh }) {
         quotes.sort((a, b) => {
             return b.QuoteId - a.QuoteId;
         });
-    } else if (quotes[0].QuoteId !== 0) {
+    } else if (quotes[0].QuoteId !== 1) {
         quotes.sort((a, b) => {
             return a.QuoteId - b.QuoteId;
         });
@@ -62,8 +62,8 @@ function Results({ flightInfo, showDate, lowHigh }) {
             <Grid container item xs={12} spacing={3}>
                 {quotes.map((quote, index) => {
                     return (
-                        <Grid item xs={4}>
-                            <Card key={index} className={classes.root}>
+                        <Grid key={index} item xs={4}>
+                            <Card className={classes.root}>
                                 <CardContent>
                                     <Typography
                                         className={classes.title}
