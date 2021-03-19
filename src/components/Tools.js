@@ -12,11 +12,11 @@ const Tools = (props) => {
             <>
                 <Button
                     className="tool"
-                    onClick={(event) => {
-                        const temp = props.origin;
-                        props.setOrigin(props.destination);
-                        props.setDestination(temp);
-                        props.handleSubmit(event);
+                    onClick={() => {
+                        const temp = props.originPlaceId;
+                        props.setOriginPlaceId(props.destinationPlaceId);
+                        props.setDestinationPlaceId(temp);
+                        props.setGetFlightData(true);
                     }}
                     variant="contained"
                     color="primary"
@@ -25,7 +25,6 @@ const Tools = (props) => {
                     Flip Search
                 </Button>
             </>
-
             <FormControl>
                 <InputLabel>Sort By</InputLabel>
                 <Select

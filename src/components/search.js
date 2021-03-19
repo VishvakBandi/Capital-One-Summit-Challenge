@@ -97,8 +97,10 @@ function Search() {
         setShowFlights(false);
         setShowMonthFlights(false);
         setShowErr(false);
+        setGetFlightData(false);
 
         console.log(destination);
+        console.log("HELLO");
 
         if (validateInput()) {
             callAPI();
@@ -122,8 +124,6 @@ function Search() {
     async function callAPI() {
         setOriginPlaceId((await fetchPlaces(origin)).data);
         setDestinationPlaceId((await fetchPlaces(destination)).data);
-
-        //console.log(destinationPlaceId);
 
         setGetFlightData(true);
     }
@@ -150,10 +150,11 @@ function Search() {
                 {showFlights ? (
                     <>
                         <Tools
-                            origin={origin}
-                            setOrigin={setOrigin}
-                            setDestination={setDestination}
-                            handleSubmit={handleSubmit}
+                            originPlaceId={originPlaceId}
+                            destinationPlaceId={destinationPlaceId}
+                            setOriginPlaceId={setOriginPlaceId}
+                            setDestinationPlaceId={setDestinationPlaceId}
+                            setGetFlightData={setGetFlightData}
                             lowHigh={lowHigh}
                             handleDropdownChange={handleDropdownChange}
                         />
