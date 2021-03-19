@@ -16,14 +16,20 @@ function Results({ flightInfo, showDate, lowHigh }) {
 
     var quotes = data.Quotes;
 
+    var cheapest;
+
     if (lowHigh !== "lowHigh") {
         quotes.sort((a, b) => {
             return b.QuoteId - a.QuoteId;
         });
+        cheapest = quotes[quotes.length - 1].QuoteId;
     } else if (quotes[0].QuoteId !== 1) {
         quotes.sort((a, b) => {
             return a.QuoteId - b.QuoteId;
         });
+        cheapest = quotes[0].QuoteId;
+    } else {
+        cheapest = quotes[0].QuoteId;
     }
 
     function findCarrier(carrierId) {
@@ -58,7 +64,7 @@ function Results({ flightInfo, showDate, lowHigh }) {
                 {quotes.map((quote, index) => {
                     return (
                         <Grid key={index} item xs={4}>
-                            <Card className={classes.root}>
+                            <Card className={classes.root} raaised={true}>
                                 <CardContent>
                                     <Typography
                                         className={classes.title}
@@ -67,6 +73,17 @@ function Results({ flightInfo, showDate, lowHigh }) {
                                     >
                                         Flight Information
                                     </Typography>
+                                    {quote.QuoteId === cheapest ? (
+                                        <Typography
+                                            fontSize={14}
+                                            color="textSecondary"
+                                            variant="overline"
+                                        >
+                                            Cheapest Flight option
+                                        </Typography>
+                                    ) : (
+                                        <></>
+                                    )}
                                     <Typography variant="h5" component="h2">
                                         ${quote.MinPrice}
                                     </Typography>
@@ -111,6 +128,12 @@ function Results({ flightInfo, showDate, lowHigh }) {
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
+        margin: "auto",
+        transition: "0.3s",
+        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        "&:hover": {
+            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+        },
     },
     bullet: {
         display: "inline-block",
