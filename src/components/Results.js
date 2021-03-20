@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import "../css/Search.css";
 
-function Results({ flightInfo, showDate, lowHigh }) {
+function Results({ flightInfo, showDate, lowHigh, currencySymbol }) {
     const classes = useStyles();
 
     const data = flightInfo.data;
@@ -58,12 +58,18 @@ function Results({ flightInfo, showDate, lowHigh }) {
         }
     }
 
+    function determineSpacing() {
+        if (quotes.length === 1) return 12;
+        else if (quotes.length === 2) return 6;
+        else return 4;
+    }
+
     return (
         <div className="resultsBox">
             <Grid container item xs={12} spacing={3}>
                 {quotes.map((quote, index) => {
                     return (
-                        <Grid key={index} item xs={4}>
+                        <Grid key={index} item xs={determineSpacing()}>
                             <Card className={classes.root}>
                                 <CardContent>
                                     <Typography
@@ -75,7 +81,7 @@ function Results({ flightInfo, showDate, lowHigh }) {
                                     {quote.QuoteId === cheapest ? (
                                         <Typography
                                             fontSize={14}
-                                            color="textSecondary"
+                                            color="blue"
                                             variant="overline"
                                         >
                                             Cheapest Flight option
@@ -84,7 +90,7 @@ function Results({ flightInfo, showDate, lowHigh }) {
                                         <></>
                                     )}
                                     <Typography variant="h5" component="h2">
-                                        ${quote.MinPrice}
+                                        {currencySymbol + quote.MinPrice}
                                     </Typography>
                                     <Typography color="textSecondary">
                                         Carrier:{" "}
@@ -123,12 +129,13 @@ function Results({ flightInfo, showDate, lowHigh }) {
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
+        minWidth: 350,
+        maxWidth: 450,
         margin: "auto",
         transition: "0.3s",
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
         "&:hover": {
-            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.6)",
         },
     },
 });

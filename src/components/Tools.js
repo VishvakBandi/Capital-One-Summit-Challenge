@@ -32,9 +32,9 @@ const Tools = (props) => {
                     onChange={props.handleDropdownChange}
                 >
                     <MenuItem value="lowHigh">
-                        <em>Low to High</em>
+                        <em>Lowest Price</em>
                     </MenuItem>
-                    <MenuItem value={"highLow"}>High to Low</MenuItem>
+                    <MenuItem value={"highLow"}>Highest Price</MenuItem>
                 </Select>
             </FormControl>
         </div>

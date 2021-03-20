@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Autocomplete from "@material-ui/core/Autocomplete";
 
 import { getCurrentDate } from "../services/utils";
 
@@ -13,20 +14,31 @@ const SearchForm = ({
     setDestination,
     setDeparture,
     setArrival,
+    currencies,
 }) => {
     return (
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <Grid container item xs={12} spacing={2}>
                 <Grid item xs={2}>
-                    <TextField
-                        required
-                        id="outlined-basic-currency"
-                        label="currency"
-                        variant="outlined"
-                        defaultValue="USD"
-                        onChange={(e) => setCurrency(e.target.value)}
+                    <Autocomplete
+                        fullWidth
+                        id="currencies-box"
+                        options={currencies}
+                        getOptionLabel={(option) => option.Code}
+                        onChange={(e, newValue) => {
+                            setCurrency(newValue.Code);
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Currency"
+                                variant="outlined"
+                                required
+                            />
+                        )}
                     />
                 </Grid>
+
                 <Grid item xs={2}>
                     <TextField
                         required
@@ -47,6 +59,7 @@ const SearchForm = ({
                 </Grid>
                 <Grid item xs={2}>
                     <TextField
+                        fullWidth
                         required
                         InputProps={{
                             inputProps: {
@@ -65,6 +78,7 @@ const SearchForm = ({
                 </Grid>
                 <Grid item xs={2}>
                     <TextField
+                        fullWidth
                         InputProps={{
                             inputProps: {
                                 min: departure,
@@ -83,6 +97,7 @@ const SearchForm = ({
                 </Grid>
                 <Grid item xs={2}>
                     <Button
+                        fullWidth
                         type="submit"
                         variant="contained"
                         color="primary"

@@ -4,8 +4,12 @@ import "../css/Search.css";
 import Results from "./Results";
 import Tools from "./Tools";
 
-import { fetchPlaces, fetchFlightWithDate } from "../services/FetchFlightData";
-import { getCurrentDate } from "../services/utils";
+import {
+    fetchPlaces,
+    fetchFlightWithDate,
+    fetchCurrencies,
+} from "../services/FetchFlightData";
+import { getCurrentDate, getCurrencySymbol } from "../services/utils";
 import SearchForm from "./SearchForm";
 
 function Search() {
@@ -14,6 +18,7 @@ function Search() {
     const [destination, setDestination] = useState("");
     const [departure, setDeparture] = useState(getCurrentDate());
     const [arrival, setArrival] = useState("");
+    const [currencySymbol, setCurrencySymbol] = useState();
 
     const [monthDeparture, setMonthDeparture] = useState("");
     const [monthArrival, setMonthArrival] = useState("");
@@ -28,9 +33,11 @@ function Search() {
 
     const [showMonthFlights, setShowMonthFlights] = useState(false);
     const [showFlights, setShowFlights] = useState(false);
-    const [showErr, setShowErr] = useState(false);
+    const [showMonthErr, setShowMonthErr] = useState(false);
+    const [showDayErr, setShowDayErr] = useState(false);
 
     const [lowHigh, setLowHigh] = useState("lowHigh");
+    const [currencies, setCurrencies] = useState();
 
     useEffect(() => {
         (async () => {
@@ -67,7 +74,7 @@ function Search() {
             } else if (flightData.status === 200) {
                 setShowFlights(true);
             } else {
-                setShowErr(true);
+                setShowDayErr(true);
             }
         })();
     }, [flightData]);
@@ -79,18 +86,27 @@ function Search() {
             } else if (monthFlightData.status === 200) {
                 setShowMonthFlights(true);
             } else {
-                setShowErr(true);
+                setShowMonthErr(true);
             }
         })();
     }, [monthFlightData]);
+
+    useEffect(() => {
+        (async () => {
+            setCurrencies((await fetchCurrencies()).data);
+        })();
+    }, []);
 
     function handleSubmit(event) {
         event.preventDefault();
 
         setShowFlights(false);
         setShowMonthFlights(false);
-        setShowErr(false);
+        setShowMonthErr(false);
+        setShowDayErr(false);
         setGetFlightData(false);
+
+        setCurrencySymbol(getCurrencySymbol(currencies, currency));
 
         if (validateInput()) {
             callAPI();
@@ -119,15 +135,21 @@ function Search() {
     return (
         <div className="Search">
             <header className="Search-header">
-                <SearchForm
-                    handleSubmit={handleSubmit}
-                    departure={departure}
-                    setCurrency={setCurrency}
-                    setOrigin={setOrigin}
-                    setDestination={setDestination}
-                    setDeparture={setDeparture}
-                    setArrival={setArrival}
-                />
+                {currencies ? (
+                    <SearchForm
+                        handleSubmit={handleSubmit}
+                        departure={departure}
+                        setCurrency={setCurrency}
+                        setOrigin={setOrigin}
+                        setDestination={setDestination}
+                        setDeparture={setDeparture}
+                        setArrival={setArrival}
+                        currencies={currencies}
+                        setCurrencySymbol={setCurrencySymbol}
+                    />
+                ) : (
+                    <></>
+                )}
                 {showFlights ? (
                     <>
                         <Tools
@@ -146,11 +168,17 @@ function Search() {
                             <Results
                                 flightInfo={flightData}
                                 lowHigh={lowHigh}
+                                currencySymbol={currencySymbol}
                             ></Results>
                         </div>
                     </>
                 ) : (
-                    <></>
+                    <>
+                        <p className="error">
+                            There are no departing flights on the selected day.
+                            Other options are below
+                        </p>
+                    </>
                 )}
 
                 {showMonthFlights ? (
@@ -162,13 +190,14 @@ function Search() {
                             flightInfo={monthFlightData}
                             showDate={true}
                             lowHigh={lowHigh}
+                            currencySymbol={currencySymbol}
                         ></Results>
                     </>
                 ) : (
                     <></>
                 )}
 
-                {showErr ? (
+                {showMonthErr && showDayErr ? (
                     <div>
                         <p className="error">
                             There are no flights available for your selections.

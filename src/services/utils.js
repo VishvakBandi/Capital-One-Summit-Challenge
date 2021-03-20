@@ -8,3 +8,11 @@ export const getCurrentDate = (separator = "-") => {
         month < 10 ? `0${month}` : `${month}`
     }${separator}${date}`;
 };
+
+export const getCurrencySymbol = (currencies, currency) => {
+    for (var i = 0; i < currencies.length; i++) {
+        if (currencies[i].Code === currency) {
+            return currencies[i].Symbol;
+        }
+    }
+};
