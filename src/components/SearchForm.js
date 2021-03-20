@@ -6,7 +6,7 @@ import { getCurrentDate } from "../services/utils";
 
 // Renders 6 elements for a search bar
 // Grid spaces all elements out equally
-// 1. Dropdown menu to seleccct currency
+// 1. Dropdown menu to select currency
 // 2. Field to enter original destination
 // 3. Field to enter final destination
 // 4. Date picker to select departure date

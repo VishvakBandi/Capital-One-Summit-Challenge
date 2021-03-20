@@ -1,4 +1,4 @@
-// Returns the ccurrent date in string format
+// Returns the current date in string format
 export const getCurrentDate = (separator = "-") => {
     let newDate = new Date();
     let date = newDate.getDate();
