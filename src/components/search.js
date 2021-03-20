@@ -108,16 +108,13 @@ function Search() {
 
         setCurrencySymbol(getCurrencySymbol(currencies, currency));
 
-        if (validateInput()) {
-            callAPI();
-        }
+        processInput();
+        callAPI();
     }
 
-    function validateInput() {
+    function processInput() {
         setMonthDeparture(departure.slice(0, 7));
         setMonthArrival(arrival.slice(0, 7));
-
-        return true;
     }
 
     async function callAPI() {

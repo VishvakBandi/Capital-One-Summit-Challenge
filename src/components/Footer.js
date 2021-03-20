@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/Footer.css";
 
+// Footer - contains baasic info about the webapp
 const Footer = (props) => {
     return (
         <div className="footerTitle">
