@@ -8,6 +8,10 @@ Website link: [https://find-flights.netlify.app/](https://find-flights.netlify.a
 FlightFinder is a React application built around the [SkyScanner API](https://rapidapi.com/skyscanner/api/skyscanner-flight-search/endpoints). FlightFinder gives you a MaterialUI interface to search and browse through various flight options, with support for multiple currencies.
 
 ---
+### Demo
+![gif](public/Demo.gif)
+
+---
 ### Deploying your own version
 Requires NPM & Git.
 1. Clone the repository to your computer
