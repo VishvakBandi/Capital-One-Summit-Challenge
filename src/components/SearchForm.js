@@ -1,11 +1,17 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Autocomplete from "@material-ui/core/Autocomplete";
+
+import { Button, TextField, Grid, Autocomplete } from "@material-ui/core";
 
 import { getCurrentDate } from "../services/utils";
 
+// Renders 6 elements for a search bar
+// Grid spaces all elements out equally
+// 1. Dropdown menu to seleccct currency
+// 2. Field to enter original destination
+// 3. Field to enter final destination
+// 4. Date picker to select departure date
+// 5. Date picker to select arrival date
+// 6. Search button to submit form
 const SearchForm = ({
     handleSubmit,
     departure,

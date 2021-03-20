@@ -1,4 +1,7 @@
-export const fetchCurrencies = (props) => {
+// Hook to get the list of supported currencies
+// Returns status 200 and currency list if succcessful
+// Otherwise returns status 500 and an error
+export const fetchCurrencies = () => {
     return getCurrencies();
 
     async function getCurrencies() {
@@ -31,6 +34,9 @@ export const fetchCurrencies = (props) => {
     }
 };
 
+// Hook to fetch the PlaceId of the Origin and Destination entered by the user
+// Returns status 200 and PlaceId if succcessful
+// Otherwise returns status 500 and an error
 export const fetchPlaces = (props) => {
     return getPlaces(props);
 
@@ -66,6 +72,10 @@ export const fetchPlaces = (props) => {
     }
 };
 
+// Hook to fetch the list of flights using the date given by the user
+// Supports partial dates as well
+// Returns status 200 and flights if succcessful
+// Otherwise returns status 500 and an error
 export const fetchFlightWithDate = (
     currency,
     originPlaceId,

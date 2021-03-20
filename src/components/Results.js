@@ -1,9 +1,6 @@
 import React from "react";
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { Card, CardContent, Typography, Grid } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -18,20 +15,21 @@ function Results({ flightInfo, showDate, lowHigh, currencySymbol }) {
 
     var cheapest;
 
+    // Checks if user wants results ordered, and sorts data response accordingly
+    // Sets cheapest equal to the first element
     if (lowHigh !== "lowHigh") {
         quotes.sort((a, b) => {
             return b.QuoteId - a.QuoteId;
         });
         cheapest = quotes[quotes.length - 1].QuoteId;
-    } else if (quotes[0].QuoteId !== 1) {
+    } else {
         quotes.sort((a, b) => {
             return a.QuoteId - b.QuoteId;
         });
         cheapest = quotes[0].QuoteId;
-    } else {
-        cheapest = quotes[0].QuoteId;
     }
 
+    // Extracts the carrier name from API response, taking the carrierId as an argument
     function findCarrier(carrierId) {
         for (var i = 0; i < data.Carriers.length; i++) {
             if (data.Carriers[i].CarrierId === carrierId) {
@@ -40,6 +38,7 @@ function Results({ flightInfo, showDate, lowHigh, currencySymbol }) {
         }
     }
 
+    // Extracts the airport name from API response, taking the airportId as an argument
     function findAirport(airportId) {
         for (var i = 0; i < data.Places.length; i++) {
             if (data.Places[i].PlaceId === airportId) {
@@ -48,6 +47,7 @@ function Results({ flightInfo, showDate, lowHigh, currencySymbol }) {
         }
     }
 
+    // Displays flight date if needed (when rendering flights for month)
     function displayDate(date) {
         if (showDate === true) {
             return (
@@ -58,12 +58,17 @@ function Results({ flightInfo, showDate, lowHigh, currencySymbol }) {
         }
     }
 
+    // Returns how elements need to be placed, if there are less than 3 results
     function determineSpacing() {
         if (quotes.length === 1) return 12;
         else if (quotes.length === 2) return 6;
         else return 4;
     }
 
+    // Returns a grid of ccards, each with information regarding the flight
+    // Each card will have Price, Carrier Information, and information regarding the origin and destination airports
+    // If the results are for flights over a general period (one month, etc), the card will also display the specific departure date
+    // If the current card is the cheapest flight, it will add a flag highlighting the cheapest option
     return (
         <div className="resultsBox">
             <Grid container item xs={12} spacing={3}>
@@ -127,6 +132,7 @@ function Results({ flightInfo, showDate, lowHigh, currencySymbol }) {
     );
 }
 
+// Style is used to enhance the card when hovered over
 const useStyles = makeStyles({
     root: {
         minWidth: 350,

@@ -1,30 +1,38 @@
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
+import {
+    InputLabel,
+    MenuItem,
+    FormControl,
+    Select,
+    Button,
+    Tooltip,
+} from "@material-ui/core";
 
 import "../css/Tools.css";
 
+// Renders 2 search options if results are valid
+// 1. Flip search, which will flip the destinations and trigger another seaarcch
+// 2. Sort By, which will sort the flight resultss by price
 const Tools = (props) => {
     return (
         <div className="tools-component">
-            <Button
-                onClick={() => {
-                    const temp = props.originPlaceId;
-                    props.setOriginPlaceId(props.destinationPlaceId);
-                    props.setDestinationPlaceId(temp);
-                    props.setGetFlightData(true);
-                }}
-                variant="contained"
-                color="primary"
-                size="large"
-                style={{
-                    marginRight: "20px",
-                }}
-            >
-                Flip Search
-            </Button>
+            <Tooltip title="Swap search locations" placement="top-start">
+                <Button
+                    onClick={() => {
+                        const temp = props.originPlaceId;
+                        props.setOriginPlaceId(props.destinationPlaceId);
+                        props.setDestinationPlaceId(temp);
+                        props.setGetFlightData(true);
+                    }}
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    style={{
+                        marginRight: "20px",
+                    }}
+                >
+                    Flip Search
+                </Button>
+            </Tooltip>
             <FormControl>
                 <InputLabel>Sort By</InputLabel>
                 <Select
