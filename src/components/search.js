@@ -172,13 +172,13 @@ function Search() {
                             ></Results>
                         </div>
                     </>
+                ) : showDayErr ? (
+                    <p className="error">
+                        There are no departing flights on the selected day.
+                        Other options are below
+                    </p>
                 ) : (
-                    <>
-                        <p className="error">
-                            There are no departing flights on the selected day.
-                            Other options are below
-                        </p>
-                    </>
+                    <></>
                 )}
 
                 {showMonthFlights ? (
