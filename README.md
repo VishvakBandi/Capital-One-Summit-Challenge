@@ -1,6 +1,7 @@
 # FlightFinder
 ---
 ## Submission for Capital One Software Engineering Summit
+## The deployed version has been taken down. If you would like to try this application, send me an email!
 ---
 ### Summary
 Website link: [https://find-flights.netlify.app/](https://find-flights.netlify.app/)
